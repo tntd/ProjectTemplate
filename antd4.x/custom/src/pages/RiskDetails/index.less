@@ -1,0 +1,57 @@
+.risk-details-page {
+    .type-actions {
+        a:not(.active) {
+            color: #666;
+        }
+    }
+}
+
+.user-details-drawer {
+    .ant-card:not(:first-child) {
+        margin-top: 20px;
+    }
+
+    .risk-event-records-timeline {
+        display: flex;
+        .ant-timeline {
+            width: 160px;
+            margin-right: 30px;
+            margin-top: 15px;
+            .ant-timeline-item {
+                &.date {
+                    font-weight: 500;
+                    i {
+                        font-size: 16px;
+                    }
+                    .ant-timeline-item-content {
+                        text-align: left;
+                    }
+                }
+                &.time {
+                    i {
+                        font-size: 13px;
+                    }
+                }
+            }
+        }
+        .ant-table-wrapper {
+            border: none;
+            flex: 1;
+            .ant-table-small {
+                border: none;
+            }
+            th {
+                border-bottom: none !important;
+            }
+            td {
+                height: 38px;
+                padding: 10px 8px !important;
+            }
+            .empty-row {
+                td {
+                    border-bottom: none !important;
+                }
+            }
+        }
+    }
+}

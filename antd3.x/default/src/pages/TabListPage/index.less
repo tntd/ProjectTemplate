@@ -1,0 +1,21 @@
+.tabs-page {
+    &.ant-tabs {
+        .ant-tabs-bar {
+            margin-bottom: 0;
+        }
+
+        .ant-tabs-nav {
+            background: #fff;
+            padding-left: 20px;
+            margin-bottom: 0;
+            width: 100%;
+        }
+
+        .ant-tabs-content {
+            height: calc(~"100vh - 100px");
+            & > .ant-tabs-tabpane {
+                overflow: auto;
+            }
+        }
+    }
+}

@@ -1,0 +1,56 @@
+.gang-analysis-details {
+    .ant-breadcrumb {
+        line-height: 48px;
+        background: #fff;
+        padding: 0 20px;
+    }
+    .ant-tabs {
+        margin: 16px;
+        background: #fff;
+    }
+    .ant-tabs-bar {
+        background: #fff;
+        margin-bottom: 0;
+    }
+
+    .ant-tabs-tabpane {
+        height: calc(~"100vh - 185px");
+        overflow: auto;
+    }
+
+    .user-relations {
+        background: #fff;
+        margin: 20px;
+        height: calc(~"100% - 40px");
+        display: flex;
+        flex-direction: column;
+        & > div {
+            flex: 1;
+        }
+    }
+
+    .gang-events {
+        &-toolbar {
+            display: flex;
+            padding: 0 0 12px;
+            h4 {
+                flex: 1;
+                font-size: 0;
+            }
+        }
+        & > div {
+            background: #fff;
+            padding-top: 8px;
+        }
+    }
+}
+
+.user-list-modal-qls {
+    & > div {
+        padding: 0;
+    }
+    tr.active {
+        background: @primary-color;
+        color: #fff;
+    }
+}
