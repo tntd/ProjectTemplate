@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Drawer, Card, Table, Timeline, Icon } from 'antd';
+import { Icon as LegacyIcon } from '@ant-design/compatible';
+import { Drawer, Card, Table, Timeline } from 'antd';
 import { get } from 'lodash';
 import service from './service';
 
@@ -30,7 +31,7 @@ export default ({ visible, user, partnerCode, close }) => {
             return acc;
         }, []);
         const DotIcon = ({ type = 'time' }) => {
-            return <Icon type={type === 'time' ? 'clock-circle-o' : 'calendar'} />;
+            return <LegacyIcon type={type === 'time' ? 'clock-circle-o' : 'calendar'} />;
         };
 
         return (

@@ -6,7 +6,6 @@ const actions = createActions();
 
 export default () => {
     const query = (params = {}) => {
-        console.log('two query...');
         return service.query({
             ...params,
             curPage: params.current || 1,
@@ -25,7 +24,6 @@ export default () => {
         { title: '回测状态', dataIndex: 'status' },
         { title: '操作', dataIndex: 'operations' }
     ];
-    console.log('two....');
 
     return (
         <QueryListScene
@@ -89,4 +87,4 @@ export default () => {
             <QueryList columns={columns} />
         </QueryListScene>
     );
-};
+}

@@ -5,6 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const apiMocker = require('mocker-api');
 const baseWebpackConfig = require('./webpack.base.conf');
 const config = require('./config');
+// const mockApis = require('../mock');
 
 module.exports = merge(baseWebpackConfig, {
 	mode: 'development',

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { connect } from 'dva';
 import { Link } from 'dva/router';
+import { CloudDownloadOutlined, CloudUploadOutlined, SettingOutlined } from '@ant-design/icons';
 import { Divider, Button, Popconfirm, Tooltip } from 'antd';
 import { QueryListScene } from 'tntd';
 import EditModal from './Modals/Edit';
@@ -27,7 +28,7 @@ const ListPage = ({ currentApp, location }) => {
             <span>
                 <a onClick={() => onEdit(record)}>配置</a>
                 <Divider type="vertical" />
-                <Link to={`${location.pathname}/detail?id=${record.id}`}>详情页</Link>
+                <Link to={`${location.pathname}/${record.id}`}>详情页</Link>
                 <Divider type="vertical" />
                 <Popconfirm
                     title="删除确认"
@@ -100,14 +101,16 @@ const ListPage = ({ currentApp, location }) => {
             ...data,
             current: data.curPage,
             data: data.data || []
-        }));
+        })).catch(err => {
+            console.log('err...', err);
+        });
     };
 
     const ExtralActions = (
         <Button.Group>
-            <Button icon="cloud-upload" />
-            <Button icon="cloud-download" />
-            <Button icon="setting" />
+            <Button icon={<CloudUploadOutlined />} />
+            <Button icon={<CloudDownloadOutlined />} />
+            <Button icon={<SettingOutlined />} />
         </Button.Group>
     );
 
@@ -117,12 +120,7 @@ const ListPage = ({ currentApp, location }) => {
             query={query}
             actions={actions}
         >
-            <QueryForm
-                extralActions={ExtralActions}
-                initialValues={{
-                    member: 'zhangyou'
-                }}
-            >
+            <QueryForm extralActions={ExtralActions}>
                 <Field
                     title=""
                     name="projectName"
@@ -141,7 +139,7 @@ const ListPage = ({ currentApp, location }) => {
                 />
                 <Field
                     title=""
-                    name="member"
+                    name="项目成员"
                     type="select"
                     props={{
                         placeholder: '项目成员',

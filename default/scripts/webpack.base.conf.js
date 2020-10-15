@@ -17,7 +17,7 @@ module.exports = {
 		splitChunks: {
 			cacheGroups: {
 				antdUI: {
-					name: 'antdUI',
+					name: "antdUI",
 					priority: 100,
 					test: /(antd)/,
 					minChunks: 3,

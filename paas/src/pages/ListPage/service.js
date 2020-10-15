@@ -22,6 +22,12 @@ export default createServices({
 }, {
     interceptors: [
         {
+            '/project/list': res => {
+                console.log('list...', res);
+                return res;
+            }
+        },
+        {
             '/user/list': res => {
                 const accountReg = /(.*)(@.*)/;
 

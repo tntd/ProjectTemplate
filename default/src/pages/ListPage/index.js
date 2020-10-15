@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { connect } from 'dva';
 import { Link } from 'dva/router';
+import { CloudDownloadOutlined, CloudUploadOutlined, SettingOutlined } from '@ant-design/icons';
 import { Divider, Button, Popconfirm, Tooltip } from 'antd';
 import { QueryListScene } from 'tntd';
 import EditModal from './Modals/Edit';
@@ -105,9 +106,9 @@ const ListPage = ({ currentApp, location }) => {
 
     const ExtralActions = (
         <Button.Group>
-            <Button icon="cloud-upload" />
-            <Button icon="cloud-download" />
-            <Button icon="setting" />
+            <Button icon={<CloudUploadOutlined />} />
+            <Button icon={<CloudDownloadOutlined />} />
+            <Button icon={<SettingOutlined />} />
         </Button.Group>
     );
 
