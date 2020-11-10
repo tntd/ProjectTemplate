@@ -16,12 +16,12 @@ moment.locale('zh-cn');
 const Shell = ({ globalStore = {}, dispatch, history, children }) => {
     const { userInfo = {}, currentApp, apps = [], menuTreeData = {} } = globalStore;
     const { name, enName, menuTree = [] } = menuTreeData;
-    const getSelecteMenuKey = () => {
+    const getSelectedMenuKey = () => {
         const { subMenu } = findMenuInfoByPath(menuTree, location.pathname);
 
         return get(subMenu, 'code');
     };
-    const layputPorps = {
+    const layoutProps = {
         type: 'paas',
         appKey: 'tnt_cli_identify',
         name,
@@ -29,7 +29,7 @@ const Shell = ({ globalStore = {}, dispatch, history, children }) => {
         logo: <img src={logo} className="logo" />,
         userInfo: userInfo,
         menus: menuTree,
-        selectedMenuKey: getSelecteMenuKey(),
+        selectedMenuKey: getSelectedMenuKey(),
         config: {
             language: false,
             application: true,
@@ -71,7 +71,7 @@ const Shell = ({ globalStore = {}, dispatch, history, children }) => {
     return (
         <ConfigProvider locale={zhCN}>
             <Layout
-                {...layputPorps}
+                {...layoutProps}
                 compatible
                 isEmptyLayout={isEmptyLayout}
                 size="large"

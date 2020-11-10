@@ -105,7 +105,7 @@ const RiskDetails = ({ dispatch, partnerCode, riskTypes, queryParams }) => {
 			};
 		});
 	};
-	const ExtralActions = () => {
+	const ExtraActions = () => {
 		const downloadUrl = `${{
 			user: service.riskUsersDownload.URL.href,
 			event: service.riskEventsDownload.URL.href
@@ -140,7 +140,7 @@ const RiskDetails = ({ dispatch, partnerCode, riskTypes, queryParams }) => {
 			<QueryForm
 				initialValues={queryParams}
 				renderActions={() => null}
-				extralActions={<ExtralActions />}
+				extraActions={<ExtraActions />}
 				onChange={onFormChange}
 			>
 				<Field

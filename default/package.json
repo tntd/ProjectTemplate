@@ -19,7 +19,7 @@
     "react-dom": "^16.12.0",
     "react-router": "^5.1.2",
     "styled-components": "^4.4.1",
-    "tntd": "^0.3.2",
+    "tntd": "^0.3.7",
     "universal-cookie": "^4.0.3"
   },
   "devDependencies": {

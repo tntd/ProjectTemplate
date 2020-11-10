@@ -23,7 +23,7 @@ const Shell = ({ globalStore = {}, dispatch, history, location, navs, children }
             history.push(nav.key);
         }
     };
-    const getSelecteNavKey = () => {
+    const getSelectedNavKey = () => {
         const pathPrefix = location.pathname.split('/')[2] || get(navs, '0.key').split('/')[2];
         const activeNav = navs.find(
             ({ key: path }) => pathPrefix === path.split('/')[2]
@@ -32,10 +32,10 @@ const Shell = ({ globalStore = {}, dispatch, history, location, navs, children }
         return get(activeNav, 'key') || get(navs, '0.key');
     };
     const Navs = props => {
-        const [selectedKey, setSelectedKey] = useState(getSelecteNavKey());
+        const [selectedKey, setSelectedKey] = useState(getSelectedNavKey());
 
         useEffect(() => {
-            setSelectedKey(getSelecteNavKey());
+            setSelectedKey(getSelectedNavKey());
         }, [location]);
 
         return (
@@ -45,7 +45,7 @@ const Shell = ({ globalStore = {}, dispatch, history, location, navs, children }
             />
         );
     };
-    const layputPorps = {
+    const layoutProps = {
         type: 'paas',
         name: '自动反欺诈',
         logo: <img src={logo} className="logo"/>,
@@ -73,7 +73,7 @@ const Shell = ({ globalStore = {}, dispatch, history, location, navs, children }
         },
         headerNavs: (
             <Navs
-                selectedKey={getSelecteNavKey()}
+                selectedKey={getSelectedNavKey()}
                 navs={navs.filter(({ showNav = true }) => showNav)}
                 onSelect={onNavSelect}
             />
@@ -84,7 +84,7 @@ const Shell = ({ globalStore = {}, dispatch, history, location, navs, children }
     return (
         <ConfigProvider locale={zhCN}>
             <Layout
-                {...layputPorps}
+                {...layoutProps}
                 compatible
                 size="large"
                 key={get(currentPartner, 'key')}

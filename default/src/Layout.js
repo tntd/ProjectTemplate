@@ -15,7 +15,7 @@ moment.locale('zh-cn');
 const Shell = ({ globalStore = {}, dispatch, history, location, children }) => {
     const { userInfo = {}, currentApp, apps = [], menuTreeData = {} } = globalStore;
     const { name, enName, menuTree = [] } = menuTreeData;
-    const getSelecteMenuKey = () => {
+    const getSelectedMenuKey = () => {
         const { subMenu } = findMenuInfoByPath(menuTree, location.pathname);
 
         return get(subMenu, 'code');
@@ -31,13 +31,14 @@ const Shell = ({ globalStore = {}, dispatch, history, location, children }) => {
         }
     };
     console.log('currentApp...', currentApp);
-    const layputPorps = {
+    const layoutProps = {
+        compatible: true,
         appKey: 'tnt_cli_identify',
         name,
         enName,
         logo: 'tnt_cli_identify',
         userInfo: userInfo,
-        selectedMenuKey: getSelecteMenuKey(),
+        selectedMenuKey: getSelectedMenuKey(),
         menus: menuTree,
         onMenuChange,
         selectedAppKey: get(currentApp, 'key'),
@@ -71,7 +72,7 @@ const Shell = ({ globalStore = {}, dispatch, history, location, children }) => {
     return (
         <ConfigProvider locale={zhCN}>
             <Layout
-                {...layputPorps}
+                {...layoutProps}
                 isEmptyLayout={isEmptyLayout}
                 key={get(currentApp, 'key')}
                 className="ued-framework-layout"
