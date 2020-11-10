@@ -106,7 +106,7 @@ const ListPage = ({ currentApp, location }) => {
         });
     };
 
-    const ExtralActions = (
+    const ExtraActions = (
         <Button.Group>
             <Button icon={<CloudUploadOutlined />} />
             <Button icon={<CloudDownloadOutlined />} />
@@ -120,7 +120,7 @@ const ListPage = ({ currentApp, location }) => {
             query={query}
             actions={actions}
         >
-            <QueryForm extralActions={ExtralActions}>
+            <QueryForm extraActions={ExtraActions}>
                 <Field
                     title=""
                     name="projectName"

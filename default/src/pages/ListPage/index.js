@@ -104,7 +104,7 @@ const ListPage = ({ currentApp, location }) => {
         }));
     };
 
-    const ExtralActions = (
+    const ExtraActions = (
         <Button.Group>
             <Button icon={<CloudUploadOutlined />} />
             <Button icon={<CloudDownloadOutlined />} />
@@ -119,7 +119,7 @@ const ListPage = ({ currentApp, location }) => {
             actions={actions}
         >
             <QueryForm
-                extralActions={ExtralActions}
+                extraActions={ExtraActions}
                 initialValues={{
                     member: 'zhangyou'
                 }}

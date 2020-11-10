@@ -19,7 +19,7 @@
     "react-dom": "^16.12.0",
     "react-router": "^5.1.2",
     "styled-components": "^4.4.1",
-    "tntd": "^1.0.4"
+    "tntd": "^1.1.8"
   },
   "devDependencies": {
     "@babel/core": "^7.0.1",
