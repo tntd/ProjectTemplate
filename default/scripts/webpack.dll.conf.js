@@ -1,12 +1,12 @@
 const path = require('path');
 const webpack = require('webpack');
+const config = require('./config');
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const outpath = '../public/vendor';
 
 const vendors = [
-	'core-js',
+	// 'core-js',
 	'dva',
-	'prop-types',
 	'react',
 	'react-dom',
 	'react-router',
@@ -20,9 +20,9 @@ module.exports = {
 	},
 	output: {
 		path: path.resolve(__dirname, outpath),
-		// filename: '[name].[chunkhash:8].js',
 		filename: '[name].js',
-		library: '[name]_library'
+		library: '[name]_library',
+		libraryTarget: 'window'
 	},
 	plugins: [
 		new webpack.DllPlugin({

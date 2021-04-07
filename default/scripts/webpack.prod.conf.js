@@ -9,14 +9,17 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
 const BranchPlugin = require('@tntd/webpack-branch-plugin');
 const baseWebpackConfig = require('./webpack.base.conf');
-const config = require('./config');
 const CopyPlugin = require('copy-webpack-plugin');
+const { name: packageName } = require('../package.json');
+const config = require('./config');
 
 module.exports = merge(baseWebpackConfig, {
 	mode: 'production',
 	output: {
 		chunkFilename: '[name].[chunkhash:8].js',
-		publicPath: config.build.assetsPublicPath
+		library: 'tnt_cli_identify',
+		libraryTarget: 'umd',
+		jsonpFunction: `webpackJsonp_${packageName}`
 	},
 	// devtool: 'source-map',
 	optimization: {
@@ -41,7 +44,7 @@ module.exports = merge(baseWebpackConfig, {
 			new UglifyJsPlugin({
 				cache: true,
 				parallel: true,
-				sourceMap: false // set to true if you want JS source maps
+				sourceMap: false
 			}),
 			new OptimizeCSSAssetsPlugin({
 				cssProcessor: {
@@ -83,7 +86,7 @@ module.exports = merge(baseWebpackConfig, {
 			}
         ]),
         new BranchPlugin({
-            filename: '.branch_info.txt'
+            filename: 'branch_info.txt'
         })
 		// new BundleAnalyzerPlugin()
 	]

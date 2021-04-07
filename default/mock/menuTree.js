@@ -8,34 +8,15 @@ module.exports = (req, res) => {
             logo: 'logo-custom.svg',
             menuTree: [
                 {
+                    code: 'monitorin2',
+                    icon: 'monitorin',
+                    menuName: '我的工作台-1',
+                    menuUuid: '4972735a01404a53a5d307e008422d0b-1',
+                    path: '/tnt_cli_identify/dashboard/workspace',
+                    sortNo: 1
+                },
+                {
                     children: [
-                        {
-                            code: 'workBench',
-                            enName: 'WorkBench',
-                            functionList: [
-                                {
-                                    code: 'deleteAnnouncement',
-                                    funcUuid:
-                                        '9488da5392c44e6c9fdf0b700685546d',
-                                    hasPermission: true,
-                                    name: '删除公告'
-                                },
-                                {
-                                    code: 'announcement',
-                                    funcUuid:
-                                        'b616e424ee6a4f42acdd95938b5b0220',
-                                    hasPermission: false,
-                                    name: '发布公告'
-                                }
-                            ],
-                            gmtCreate: 1570599997000,
-                            hasPermission: false,
-                            icon: 'monitorin',
-                            menuName: '我的工作台',
-                            menuUuid: '4972735a01404a53a5d307e008422d0b',
-                            path: '/tnt_cli_identify/dashboard/workspace',
-                            sortNo: 1
-                        },
                         {
                             code: 'JY0201',
                             enName: 'Risk Trend',

@@ -10,14 +10,15 @@ module.exports = merge(baseWebpackConfig, {
 	mode: 'development',
 	cache: true,
 	output: {
-		chunkFilename: 'js/[name].js',
-		publicPath: config.dev.assetsPublicPath
+		publicPath: config.dev.assetsPublicPath,
+		filename: '[name].js',
+		chunkFilename: '[name].js'
 	},
 	devServer: {
 		inline: true,
 		host: config.dev.host,
 		port: config.dev.port,
-		contentBase: [path.join(__dirname, '../dist'), path.join(__dirname, '../public')],
+		contentBase: [path.join(__dirname, '../public')],
 		open: config.dev.autoOpenBrowser,
 		proxy: config.dev.proxyTable || {},
 		before: app => {
@@ -38,7 +39,7 @@ module.exports = merge(baseWebpackConfig, {
 			template: config.common.htmlTemplatePath,	// 配置html模板的地址
 			inject: true,
 			chunksSortMode: 'none',
-			dllPath: '/vendor',
+			dllPath: `${config.dev.assetsPublicPath}vendor`,
 			publicPath: config.dev.assetsPublicPath
 		})
 	],

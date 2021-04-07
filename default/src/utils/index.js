@@ -23,32 +23,3 @@ export const prettyJSON = str => {
 
     return str;
 };
-
-export const findMenuInfoByPath = (menuTree, path) => {
-	let menu;
-	let subMenu;
-
-	if (path) {
-        for (let i = 0; i < menuTree.length; i++) {
-            menu = menuTree[i];
-
-            for (let j = 0; j < (menu.children || []).length; j++) {
-                if (menu.children[j].path === path) {
-                    subMenu = menu.children[j];
-                    break;
-                }
-            }
-
-            if (subMenu) {
-                break;
-            }
-        }
-
-        return {
-            subMenu,
-            menu
-        };
-    }
-
-    return { subMenu, menu };
-};

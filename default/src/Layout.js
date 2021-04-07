@@ -1,38 +1,39 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { connect } from 'dva';
 import { withRouter, matchPath } from 'dva/router';
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/es/locale/zh_CN';
+import enUS from 'antd/es/locale/en_US';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
 import { get } from 'lodash';
 import { Layout, AuthContext } from 'tntd';
-import { findMenuInfoByPath } from '@/utils';
 import { routerPrefix } from '@/constants';
 
 moment.locale('zh-cn');
 
-const Shell = ({ globalStore = {}, dispatch, history, location, children }) => {
+const { findMenuInfoByPath } = Layout;
+
+const Shell = ({ globalStore = {}, dispatch, actions, history, location, children }) => {
     const { userInfo = {}, currentApp, apps = [], menuTreeData = {} } = globalStore;
     const { name, enName, menuTree = [] } = menuTreeData;
+    const [language, setLanguage] = useState(localStorage.getItem('lang') || 'cn');
     const getSelectedMenuKey = () => {
         const { subMenu } = findMenuInfoByPath(menuTree, location.pathname);
 
         return get(subMenu, 'code');
     };
-    const onMenuChange = ({ data }) => {
-        const path = get(data, 'path');
-
-        // 当前系统
-        if (path.startsWith(routerPrefix)) {
-            history.push(path);
-        } else { // 跳转到其它系统
-            window.location.href = path;
-        }
+    const onAppChange = app => {
+        dispatch({
+            type: 'global/updateState',
+            payload: {
+                currentApp: app
+            }
+        });
     };
-    console.log('currentApp...', currentApp);
+    const onLanguageChange = lang => setLanguage(lang);
     const layoutProps = {
-        compatible: true,
+        // compatible: true,
         appKey: 'tnt_cli_identify',
         name,
         enName,
@@ -40,18 +41,12 @@ const Shell = ({ globalStore = {}, dispatch, history, location, children }) => {
         userInfo: userInfo,
         selectedMenuKey: getSelectedMenuKey(),
         menus: menuTree,
-        onMenuChange,
+        changeRouter: path => history.push(path),
         selectedAppKey: get(currentApp, 'key'),
         appList: apps,
         onLogoClick: () => history.push('/'),
-        onAppChange: app => {
-            dispatch({
-                type: 'global/updateState',
-                payload: {
-                    currentApp: app
-                }
-            });
-        }
+        onAppChange,
+        onLanguageChange
     };
     const isEmptyLayout = [
         `${routerPrefix}/dashboard/workspace/:id`
@@ -59,21 +54,35 @@ const Shell = ({ globalStore = {}, dispatch, history, location, children }) => {
 
     useEffect(() => {
         dispatch({
-            type: 'global/getUserInfo'
+            type: 'global/getUserInfo',
+            actions
         });
         dispatch({
-            type: 'global/getUserMenuTree'
+            type: 'global/getUserMenuTree',
+            actions
         });
-        dispatch({
-            type: 'global/getApps'
-        });
+
+        // 在lightbox中,需要使用事件方式监听数据变化
+        const { CURRENT_APP_CHANGE, LANGUAGE_CHANGE } = actions?.EVENTS_ENUM || {};
+
+        if (actions) {
+            actions.on(CURRENT_APP_CHANGE, onAppChange);
+            actions.on(LANGUAGE_CHANGE, onLanguageChange);
+        }
+
+        return () => {
+            if (actions) {
+                actions.off(CURRENT_APP_CHANGE, onAppChange);
+                actions.off(LANGUAGE_CHANGE, onLanguageChange);
+            }
+        };
     }, []);
 
     return (
-        <ConfigProvider locale={zhCN}>
+        <ConfigProvider locale={language === 'en' ? enUS : zhCN}>
             <Layout
                 {...layoutProps}
-                isEmptyLayout={isEmptyLayout}
+                isEmptyLayout={window.isInLightBox || isEmptyLayout}
                 key={get(currentApp, 'key')}
                 className="ued-framework-layout"
             >

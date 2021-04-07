@@ -1,38 +1,38 @@
 const path = require('path');
 const PORT = process.env.PORT || 8000;
+const resourcePrefix = '/tnt_cli_identify-resource/';
 
 module.exports = {
 	common: {
 		htmlTemplatePath: path.resolve(__dirname, '../src/index.html'),
-		dllPath: path.resolve(__dirname, '../public/vendor')
+		dllPath: path.resolve(__dirname, '../public/vendor'),
+		resourcePrefix
 	},
 	dev: {
 		hot: true,
 		assetsSubDirectory: 'static',
 		assetsPublicPath: '/',
 		proxyTable: {
-			'/tnt_cli_identifyApi/partner': {
-				'target': 'http://0.0.0:8200',
+			'/bridgeApi': {
+				'target': 'http://10.58.12.46:8090',
 				'changeOrigin': true,
-				// 'pathRewrite': {
-				// 	'^/aaf': '/aaf'
-				// }
+				'pathRewrite': {
+					// "^/bridgeApi": "/api"
+				}
 			},
 			'/tnt_cli_identifyApi': {
-				// 'target': 'http://10.59.100.211:8088',
-				'target': 'http://10.57.243.243:8099',
+				'target': 'http://10.58.12.46:8090',
 				'changeOrigin': true,
 				'pathRewrite': {
-					'^/aaf': '/aaf'
+					// '^/tnt_cli_identifyApi': '/api'
 				}
 			},
-			'/mock': {
-				'target': 'http://127.0.0.1:7001',
-				'changeOrigin': true,
-				'pathRewrite': {
-					'^/mock': '/mock'
-				}
-			}
+			'/tnt_cli_identify-resource': {
+                target: `http://127.0.0.1:${PORT}`,
+                pathRewrite: {
+                    '^/tnt_cli_identify-resource': ''
+                }
+            }
 		},
 		host: '0.0.0.0',
 		port: PORT,
@@ -42,7 +42,7 @@ module.exports = {
 	build: {
 		assetsRoot: path.resolve(__dirname, '../dist'),
 		assetsSubDirectory: 'static',
-		assetsPublicPath: '/static-tnt_cli_identify/',
-		devtool: 'source-map'
+		assetsPublicPath: resourcePrefix,
+		devtool: false
 	}
 };

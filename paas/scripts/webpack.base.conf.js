@@ -13,11 +13,16 @@ module.exports = {
 	entry: {
 		app: './src/app.js'
     },
+	output: {
+		path: config.build.assetsRoot,
+		publicPath: config.common.resourcePrefix,
+		filename: '[name].[hash].js'
+	},
     optimization: {
 		splitChunks: {
 			cacheGroups: {
 				antdUI: {
-					name: "antdUI",
+					name: 'antdUI',
 					priority: 100,
 					test: /(antd)/,
 					minChunks: 3,
@@ -39,19 +44,13 @@ module.exports = {
 		}),
 		new webpack.HotModuleReplacementPlugin()
 	],
-	output: {
-		path: config.build.assetsRoot,
-		filename: '[name].[hash].js'
-	},
 	resolve: {
 		extensions: ['.js', '.json'],
 		alias: {
 			'@': resolve('src')
 		}
 	},
-	externals: {
-
-	},
+	externals: {},
 	module: {
 		rules: [
 			{
@@ -81,7 +80,6 @@ module.exports = {
 							modules: true,
 							localIndexName: '[name]__[local]___[hash:base64:5]',
 							modifyVars: {
-								// hack: 'true; @import "~@tntd/antd-cover/tnt.less";'
 								hack: 'true; @import \'~@/theme.less\';'
 							}
 						}
@@ -94,7 +92,7 @@ module.exports = {
 				loader: 'url-loader',
 				options: {
 					limit: 10000,
-					name: devMode ? utils.assetsPath('img/[name].[ext]') : utils.assetsPath('img/[name].[hash:7].[ext]'),
+					name: devMode ? utils.assetsPath('img/[name].[ext]') : utils.assetsPath('img/[name].[hash:7].[ext]')
 				}
 			},
 			{

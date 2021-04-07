@@ -1,3 +1,4 @@
+import ReactDOM from 'react-dom';
 import dva from 'dva';
 import { createBrowserHistory } from 'history';
 import { message } from 'antd';
@@ -22,11 +23,42 @@ const app = dva({
 	}
 });
 
-// 配置 hooks 或者注册插件
-// app.use(nprogressDva());
-app.model(globalModel);
+const registerModels = () => {
+	app.model(globalModel);
+};
 
-app.router(router);
-app.start('#root');
+if (!window.isInLightBox) {
+	registerModels(app);
+	app.router(router);
+	app.start('#root');
+}
+
+export async function bootstrap() {
+	console.log('react app bootstrapped');
+};
+
+export const mount = async ({ actions }) => {
+	registerModels(app, actions);
+	// app.router(router);
+	// 这里每次挂载时需要重新创建history对象，
+	// 解决二次挂载时用到了前一次挂载的history对象而导致路由render异常问题
+	app.router(
+		({ app }) => router({ history: createBrowserHistory(), app, actions })
+	);
+	app.start('#root');
+};
+
+export const unmount = async () => {
+	ReactDOM.unmountComponentAtNode(document.getElementById('root'));
+	app._models.forEach(model => {
+	  app.unmodel(model.namespace);
+	});
+};
+
+export async function update(props) {
+	console.log('update props', props);
+};
+
+export const getAppStore = () => app._store;
 
 export default app._store;

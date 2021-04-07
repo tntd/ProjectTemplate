@@ -4,7 +4,7 @@ const webpack = require('webpack');
 const outpath = '../public/vendor';
 
 const vendors = [
-	'core-js',
+	// 'core-js',
 	'dva',
 	'prop-types',
 	'react',

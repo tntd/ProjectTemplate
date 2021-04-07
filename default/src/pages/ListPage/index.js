@@ -168,8 +168,8 @@ const ListPage = ({ currentApp, location }) => {
             </Toolbar>
             <QueryList
                 columns={columns}
-                top={334}
-                scroll={{ y: window.innerHeight - 334 }}
+                top={312}
+                scroll={{ y: window.innerHeight - 312 }}
             />
             <EditModal
                 visible={!!editItem}

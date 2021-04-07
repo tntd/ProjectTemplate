@@ -9,12 +9,13 @@ import { get } from 'lodash';
 import { Layout, AuthContext } from 'tntd';
 import logo from '@/images/logo.svg';
 import { routerPrefix } from '@/constants';
-import { findMenuInfoByPath } from '@/utils';
 
 moment.locale('zh-cn');
 
+const { findMenuInfoByPath } = Layout;
+
 const Shell = ({ globalStore = {}, dispatch, history, children }) => {
-    const { userInfo = {}, currentApp, apps = [], menuTreeData = {} } = globalStore;
+    const { userInfo = {}, currentApp, menuTreeData = {} } = globalStore;
     const { name, enName, menuTree = [] } = menuTreeData;
     const getSelectedMenuKey = () => {
         const { subMenu } = findMenuInfoByPath(menuTree, location.pathname);
@@ -37,7 +38,7 @@ const Shell = ({ globalStore = {}, dispatch, history, children }) => {
             avatar: true
         },
         selectedAppKey: get(currentApp, 'key'),
-        appList: apps,
+        appList: userInfo?.apps || [],
         onMenuChange: ({ data }) => history.push(get(data, 'path')),
         onLogoClick: () => history.push('/'),
         onAppChange: app => {
@@ -62,9 +63,6 @@ const Shell = ({ globalStore = {}, dispatch, history, children }) => {
         });
         dispatch({
             type: 'global/getUserMenuTree'
-        });
-        dispatch({
-            type: 'global/getApps'
         });
     }, []);
 
