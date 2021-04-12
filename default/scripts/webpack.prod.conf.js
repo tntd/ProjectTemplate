@@ -10,16 +10,12 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const BranchPlugin = require('@tntd/webpack-branch-plugin');
 const baseWebpackConfig = require('./webpack.base.conf');
 const CopyPlugin = require('copy-webpack-plugin');
-const { name: packageName } = require('../package.json');
 const config = require('./config');
 
 module.exports = merge(baseWebpackConfig, {
 	mode: 'production',
 	output: {
-		chunkFilename: '[name].[chunkhash:8].js',
-		library: 'tnt_cli_identify',
-		libraryTarget: 'umd',
-		jsonpFunction: `webpackJsonp_${packageName}`
+		chunkFilename: '[name].[chunkhash:8].js'
 	},
 	// devtool: 'source-map',
 	optimization: {
@@ -73,7 +69,6 @@ module.exports = merge(baseWebpackConfig, {
 			filename: 'index.html',
 			template: config.common.htmlTemplatePath,	// 配置html模板的地址
 			chunksSortMode: 'none',
-			dllPath: `${config.build.assetsPublicPath}vendor`,
 			publicPath: config.build.assetsPublicPath
 		}),
 		new MiniCssExtractPlugin({

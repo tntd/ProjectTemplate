@@ -4,6 +4,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const config = require('./config');
 const utils = require('./utils');
 const devMode = process.env.SYS_ENV !== 'production';
+const { name: packageName } = require('../package.json');
 
 const resolve = dir => path.join(__dirname, '..', dir);
 
@@ -15,8 +16,11 @@ module.exports = {
     },
 	output: {
 		path: config.build.assetsRoot,
-		publicPath: config.common.resourcePrefix,
-		filename: '[name].[hash].js'
+		publicPath: `/${config.common.resourcePrefix}`,
+		filename: '[name].[hash].js',
+		library: 'tnt_cli_identify',
+		libraryTarget: 'umd',
+		jsonpFunction: `webpackJsonp_${packageName}`
 	},
     optimization: {
 		splitChunks: {

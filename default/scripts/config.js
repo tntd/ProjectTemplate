@@ -1,6 +1,6 @@
 const path = require('path');
 const PORT = process.env.PORT || 8000;
-const resourcePrefix = '/tnt_cli_identify-resource/';
+const resourcePrefix = 'tnt_cli_identify-resource/';
 
 module.exports = {
 	common: {
@@ -14,14 +14,14 @@ module.exports = {
 		assetsPublicPath: '/',
 		proxyTable: {
 			'/bridgeApi': {
-				'target': 'http://10.58.12.46:8090',
+				'target': `http://127.0.0.1:${PORT}`,
 				'changeOrigin': true,
 				'pathRewrite': {
 					// "^/bridgeApi": "/api"
 				}
 			},
 			'/tnt_cli_identifyApi': {
-				'target': 'http://10.58.12.46:8090',
+				'target': `http://127.0.0.1:${PORT}`,
 				'changeOrigin': true,
 				'pathRewrite': {
 					// '^/tnt_cli_identifyApi': '/api'
@@ -42,7 +42,7 @@ module.exports = {
 	build: {
 		assetsRoot: path.resolve(__dirname, '../dist'),
 		assetsSubDirectory: 'static',
-		assetsPublicPath: resourcePrefix,
+		assetsPublicPath: `/${resourcePrefix}`,
 		devtool: false
 	}
 };

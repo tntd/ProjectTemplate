@@ -5,14 +5,15 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const apiMocker = require('mocker-api');
 const baseWebpackConfig = require('./webpack.base.conf');
 const config = require('./config');
+const resourcePrefix = config.common.resourcePrefix;
 
 module.exports = merge(baseWebpackConfig, {
 	mode: 'development',
 	cache: true,
 	output: {
 		publicPath: config.dev.assetsPublicPath,
-		filename: '[name].js',
-		chunkFilename: '[name].js'
+		filename: `${resourcePrefix}[name].js`,
+		chunkFilename: `${resourcePrefix}[name].js`
 	},
 	devServer: {
 		inline: true,
@@ -39,8 +40,8 @@ module.exports = merge(baseWebpackConfig, {
 			template: config.common.htmlTemplatePath,	// 配置html模板的地址
 			inject: true,
 			chunksSortMode: 'none',
-			dllPath: `${config.dev.assetsPublicPath}vendor`,
-			publicPath: config.dev.assetsPublicPath
+			// publicPath: config.dev.assetsPublicPath
+			publicPath: `/${resourcePrefix}`
 		})
 	],
 	optimization: {
