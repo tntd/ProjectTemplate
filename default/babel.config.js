@@ -3,7 +3,7 @@
  * @author zhangyou
  */
 
- const presets = [
+const presets = [
     [
         '@babel/preset-env',
         {
@@ -31,18 +31,8 @@ const plugins = [
             legacy: true
         }
     ],
-    [
-        '@babel/plugin-proposal-class-properties',
-        {
-            loose: true
-        }
-    ],
-    [
-        '@babel/plugin-proposal-optional-chaining',
-        {
-            loose: true
-        }
-    ],
+    '@babel/plugin-proposal-class-properties',
+    '@babel/plugin-proposal-optional-chaining',
     [
         'import',
         {

@@ -16,7 +16,7 @@ module.exports = {
 	output: {
 		path: config.build.assetsRoot,
 		publicPath: `/${config.common.resourcePrefix}`,
-		filename: '[name].[hash].js',
+		filename: '[name].[chunkhash].js',
 		library: 'tnt_cli_identify',
 		libraryTarget: 'umd',
 		chunkLoadingGlobal: `webpackJsonp_${packageName}`
