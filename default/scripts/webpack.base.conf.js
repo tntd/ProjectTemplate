@@ -2,7 +2,6 @@ const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const config = require('./config');
-const utils = require('./utils');
 const devMode = process.env.SYS_ENV !== 'production';
 const { name: packageName } = require('../package.json');
 
@@ -13,33 +12,16 @@ module.exports = {
 	context: path.resolve(__dirname, '../'),
 	entry: {
 		app: './src/app.js'
-    },
+	},
 	output: {
 		path: config.build.assetsRoot,
 		publicPath: `/${config.common.resourcePrefix}`,
 		filename: '[name].[hash].js',
 		library: 'tnt_cli_identify',
 		libraryTarget: 'umd',
-		jsonpFunction: `webpackJsonp_${packageName}`
-	},
-    optimization: {
-		splitChunks: {
-			cacheGroups: {
-				antdUI: {
-					name: 'antdUI',
-					priority: 100,
-					test: /(antd)/,
-					minChunks: 3,
-					reuseExistingChunk: true
-				}
-			}
-		}
+		chunkLoadingGlobal: `webpackJsonp_${packageName}`
 	},
 	plugins: [
-		new webpack.DllReferencePlugin({
-			context: __dirname,
-			manifest: path.resolve(__dirname, '../public/vendor/vendor_manifest.json')
-		}),
 		new webpack.DefinePlugin({
 			'process.env': JSON.stringify(process.env)
 		}),
@@ -93,31 +75,33 @@ module.exports = {
 			},
 			{
 				test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-				loader: 'url-loader',
-				options: {
-					limit: 10000,
-					name: devMode ? utils.assetsPath('img/[name].[ext]') : utils.assetsPath('img/[name].[hash:7].[ext]')
+				type: 'asset',
+				generator: {
+					filename: 'images/[hash][ext]'
+				},
+				parser: {
+					dataUrlCondition: {
+						maxSize: 10 * 1024 // 10kb
+					}
 				}
 			},
 			{
-				test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
-				loader: 'url-loader',
-				options: {
-					limit: 10000,
-					name: devMode ? utils.assetsPath('media/[name].[ext]') : utils.assetsPath('media/[name].[hash:7].[ext]')
+				test: /\.(mp4|webm|ogg|mp3|wav|flac|aac|woff2?|eot|ttf|otf)(\?.*)?$/,
+				type: 'asset/resource',
+				generator: {
+					filename: 'images/[hash][ext]'
 				}
 			},
 			{
 				test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-				loader: 'url-loader',
-				options: {
-					limit: 10000,
-					name: devMode ? utils.assetsPath('fonts/[name].[ext]') : utils.assetsPath('fonts/[name].[hash:7].[ext]')
+				type: 'asset/resource',
+				generator: {
+					filename: 'fonts/[hash][ext]'
 				}
 			},
 			{
 				test: /\.xml$/i,
-				use: 'raw-loader'
+				type: 'asset/source'
 			}
 		]
 	}

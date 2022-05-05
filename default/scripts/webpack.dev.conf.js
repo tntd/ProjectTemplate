@@ -1,6 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
-const merge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const apiMocker = require('mocker-api');
 const baseWebpackConfig = require('./webpack.base.conf');
@@ -16,25 +16,28 @@ module.exports = merge(baseWebpackConfig, {
 		chunkFilename: `${resourcePrefix}[name].js`
 	},
 	devServer: {
-		inline: true,
 		host: config.dev.host,
 		port: config.dev.port,
-		contentBase: [path.join(__dirname, '../public')],
+		static: [path.join(__dirname, '../public')],
 		open: config.dev.autoOpenBrowser,
 		proxy: config.dev.proxyTable || {},
-		before: app => {
+		onBeforeSetupMiddleware: function (devServer) {
+			if (!devServer) {
+				throw new Error('webpack-dev-server is not defined');
+			}
+
+			const { app } = devServer;
 			if (process.env.MOCK) {
 				apiMocker(app, path.resolve('./mock/index.js'));
 			}
+
 		},
 		hot: true,
-		historyApiFallback: true,
-		disableHostCheck: true
+		historyApiFallback: true
 	},
 	devtool: config.dev.devtool,
 	plugins: [
 		new webpack.HotModuleReplacementPlugin(),
-		new webpack.NamedModulesPlugin(),
 		new HtmlWebpackPlugin({
 			filename: 'index.html',
 			template: config.common.htmlTemplatePath,	// 配置html模板的地址
@@ -45,6 +48,7 @@ module.exports = merge(baseWebpackConfig, {
 		})
 	],
 	optimization: {
-		minimize: false
+		minimize: false,
+		moduleIds: 'named'
 	}
 });

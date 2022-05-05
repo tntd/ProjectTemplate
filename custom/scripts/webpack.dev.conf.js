@@ -13,29 +13,31 @@ module.exports = merge(baseWebpackConfig, {
 	output: {
 		chunkFilename: 'js/[name].js',
 		publicPath: config.dev.assetsPublicPath
-    },
+	},
 	devServer: {
 		inline: true,
 		host: config.dev.host,
 		port: config.dev.port,
-		contentBase: [path.join(__dirname, '../dist'), path.join(__dirname, '../public')],
+		static: [
+			path.join(__dirname, '../dist'),
+			path.join(__dirname, '../public')
+		],
 		open: config.dev.autoOpenBrowser,
 		proxy: config.dev.proxyTable || {},
 		before: app => {
 			if (process.env.MOCK) {
-				  for (const key in mockApis) {
+				for (const key in mockApis) {
 					//   if (key.indexOf('partner') > -1) {
-						app.get(`${key}`, mockApis[key]);
-						app.post(`${key}`, mockApis[key]);
+					app.get(`${key}`, mockApis[key]);
+					app.post(`${key}`, mockApis[key]);
 					//   }
-				  }
+				}
 				console.log('mockApis...', mockApis);
 				// apiMocker(app, mockApis);
 			}
 		},
 		hot: true,
-		historyApiFallback: true,
-		disableHostCheck: true
+		historyApiFallback: true
 	},
 	devtool: config.dev.devtool,
 	plugins: [
@@ -46,7 +48,6 @@ module.exports = merge(baseWebpackConfig, {
 			template: config.common.htmlTemplatePath,	// 配置html模板的地址
 			inject: true,
 			chunksSortMode: 'none',
-			dllPath: '/vendor',
 			publicPath: config.dev.assetsPublicPath
 		})
 	],
